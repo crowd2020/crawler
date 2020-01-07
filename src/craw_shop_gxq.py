@@ -16,13 +16,12 @@ import config
 
 class GxqShopList():
     def __init__(self):
-        #self.db = xdb.XDatabase(config.MYSQL_HOST,
-        #                        config.MYSQL_DB,
-        #                        config.MYSQL_PORT,
-        #                        config.MYSQL_USER,
-        #                        config.MYSQL_PASS)
-        #self.db_handler = self.db.query2
+        file_path = "../files/"
+        file_name = utils.get_time_string(int(time.time()))
+        self.files = file_path + file_name
         self.marqueen_url = "https://shop.gxq168.com/index/login"
+        self.file_column = list()
+        self.load_file()
 
     def craw_marqueen(self):
         content = xcurl.xcurl(self.marqueen_url).replace("\r", "").replace("\n", "")
@@ -35,8 +34,8 @@ class GxqShopList():
             return
         buy_list = utils.reg1(config.marqueen_item_str, buy_content)
         write_string = ""
-        write_string += "用户 订单时间    商品    个数\n"
         today = utils.get_time_string(int(time.time()))
+        uniq_list = list()
         for item in buy_list:
             idx = item.find("用户")
             if idx == -1:
@@ -53,14 +52,29 @@ class GxqShopList():
             idx2 = item.find("<i>x")
             goods_name = item[idx1 + len(config.name_str):idx2].strip()
             print user_phone, order_time, goods_name, goods_num
-            line = user_phone + "   " + order_time + "  " + goods_name + "  " + goods_num + "\n"
-            write_string += line
+            line = user_phone + "   " + order_time + "  " + goods_name + "  " + goods_num
+            if line in self.file_column:
+                print "column exist"
+                continue
+            write_string += line + "\n"
+
+        if write_string != "":
+            header = ""
+            if len(self.file_column) == 0:
+                header = "用户 订单时间    商品    个数\n"
+            write_string = header + write_string
             self.write_file(write_string)
 
+    def load_file(self):
+        if os.path.exists(self.files) is False:
+            return
+        fd = open(self.files, "r")
+        for line in fd:
+            line = line.strip()
+            self.file_column.append(line)
+
     def write_file(self, write_string):
-        file_path = "../files/"
-        file_name = utils.get_time_string(int(time.time()))
-        fd = open(file_path + file_name, "w")
+        fd = open(self.files, "a+")
         fd.write(write_string)
         fd.close()
 
