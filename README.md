@@ -1,3 +1,3 @@
 # crawler
   抓取gun平台轮播banner，还未匹配金额
-  依赖python2.x, 执行python craw_shop_gxq.py
+  依赖python2.x, 执行python craw_shop_gxq.py, 会生成对应当天抓取结果到files目录
