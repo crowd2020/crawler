@@ -23,4 +23,4 @@ def get_midnight_ts(ts):
 
 def get_time_string(ts):
     tm = time.localtime(ts)
-    return time.strftime("%Y-%m-%d %H:%M:%S", tm)
+    return time.strftime("%Y-%m-%d", tm)

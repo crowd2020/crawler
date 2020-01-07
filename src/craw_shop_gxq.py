@@ -6,6 +6,7 @@ import sys
 sys.path.append(os.path.abspath("../common"))
 
 import re
+import time
 import xdb
 import xlog
 import xcurl
@@ -32,22 +33,36 @@ class GxqShopList():
         if buy_content == "":
             xlog.LOG.WARN("get marquee content error")
             return
-        buy_list = utils.reg1(config.marqueen_item_str
-                              , buy_content)
+        buy_list = utils.reg1(config.marqueen_item_str, buy_content)
+        write_string = ""
+        write_string += "用户 订单时间    商品    个数\n"
+        today = utils.get_time_string(int(time.time()))
         for item in buy_list:
             idx = item.find("用户")
             if idx == -1:
                 continue
-            user_phone = item[idx-11:idx]
+            user_phone = item[idx - 11:idx]
             column_list = utils.reg1(config.item_column_str, item)
             if len(column_list) < 3:
                 continue
             order_time = column_list[0]
+            if order_time.find(today) == -1:
+                continue
             goods_num = column_list[2].split(" ")[-1]
             idx1 = item.find(config.name_str)
             idx2 = item.find("<i>x")
-            goods_name = item[idx1+len(config.name_str):idx2].strip()
+            goods_name = item[idx1 + len(config.name_str):idx2].strip()
             print user_phone, order_time, goods_name, goods_num
+            line = user_phone + "   " + order_time + "  " + goods_name + "  " + goods_num + "\n"
+            write_string += line
+            self.write_file(write_string)
+
+    def write_file(self, write_string):
+        file_path = "../files/"
+        file_name = utils.get_time_string(int(time.time()))
+        fd = open(file_path + file_name, "w")
+        fd.write(write_string)
+        fd.close()
 
 
 if __name__ == "__main__":
