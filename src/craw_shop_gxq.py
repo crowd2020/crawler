@@ -18,7 +18,7 @@ class GxqShopList():
     def __init__(self):
         file_path = "../files/"
         file_name = utils.get_time_string(int(time.time()))
-        self.files = file_path + file_name + "滚雪球商城抓取结果.txt"
+        self.files = file_path + file_name + "滚雪球商城抓取结果"
         self.marqueen_url = "https://shop.gxq168.com/index/login"
         self.file_column = list()
         self.load_file()
