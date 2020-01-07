@@ -1,0 +1,8 @@
+[2020-01-07 15:10:31,104 ERROR 92910] [xdb.py:41] [connect_db] CONNECT TO XDB FAILED! ERR INFO: (2003, "Can't connect to MySQL server on 'rm-uf6073mh9z3oui340.mysql.rds.aliyuncs.com' (60)")
+[2020-01-07 15:11:17,083 ERROR 92941] [xdb.py:41] [connect_db] CONNECT TO XDB FAILED! ERR INFO: (2003, "Can't connect to MySQL server on 'rm-uf6073mh9z3oui340.mysql.rds.aliyuncs.com' (60)")
+[2020-01-07 15:11:17,367 WARNING 92941] [trans_course_manager.py:34] [craw_marqueen] get marquee content error
+[2020-01-07 15:11:47,451 WARNING 92951] [trans_course_manager.py:34] [craw_marqueen] get marquee content error
+[2020-01-07 15:12:24,873 WARNING 92962] [craw_shop_gxq.py:34] [craw_marqueen] get marquee content error
+[2020-01-07 15:13:04,065 WARNING 92976] [craw_shop_gxq.py:35] [craw_marqueen] get marquee content error
+[2020-01-07 15:13:48,548 WARNING 92990] [craw_shop_gxq.py:35] [craw_marqueen] get marquee content error
+[2020-01-07 15:15:50,926 WARNING 93029] [craw_shop_gxq.py:34] [craw_marqueen] get marquee content error
