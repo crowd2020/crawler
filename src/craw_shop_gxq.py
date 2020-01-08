@@ -45,13 +45,16 @@ class GxqShopList():
         for item in buy_list:
             idx = item.find("用户")
             if idx == -1:
+                xlog.LOG.ERROR("find user error")
                 continue
             user_phone = item[idx - 11:idx]
             column_list = utils.reg1(config.item_column_str, item)
             if len(column_list) < 3:
+                xlog.LOG.ERROR("column_list length error")
                 continue
             order_time = column_list[0]
             if order_time.find(craw_day) == -1:
+                xlog.LOG.ERROR("find order_time error")
                 continue
             goods_num = column_list[2].split(" ")[-1]
             idx1 = item.find(config.name_str)
@@ -63,6 +66,7 @@ class GxqShopList():
                 print "column exist"
                 continue
             write_string += line + "\n"
+            print write_string
 
         if write_string != "":
             header = ""
