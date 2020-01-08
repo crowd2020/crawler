@@ -15,9 +15,12 @@ import config
 
 
 class GxqShopList():
-    def __init__(self):
+    def __init__(self, date):
         file_path = "../files/"
         file_name = utils.get_time_string(int(time.time()))
+        self.date = date
+        if self.date != "":
+            file_name = self.date
         self.files = file_path + file_name + "滚雪球商城抓取结果"
         self.marqueen_url = "https://shop.gxq168.com/index/login"
         self.file_column = list()
@@ -35,6 +38,9 @@ class GxqShopList():
         buy_list = utils.reg1(config.marqueen_item_str, buy_content)
         write_string = ""
         today = utils.get_time_string(int(time.time()))
+        craw_day = today
+        if self.date != "":
+            craw_day = self.date
         uniq_list = list()
         for item in buy_list:
             idx = item.find("用户")
@@ -45,7 +51,7 @@ class GxqShopList():
             if len(column_list) < 3:
                 continue
             order_time = column_list[0]
-            if order_time.find(today) == -1:
+            if order_time.find(craw_day) == -1:
                 continue
             goods_num = column_list[2].split(" ")[-1]
             idx1 = item.find(config.name_str)
@@ -80,5 +86,8 @@ class GxqShopList():
 
 
 if __name__ == "__main__":
-    tx = GxqShopList()
+    date = ""
+    if len(sys.argv) > 1:
+        date = sys.argv[1]
+    tx = GxqShopList(date)
     tx.craw_marqueen()
