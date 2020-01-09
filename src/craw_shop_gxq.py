@@ -95,15 +95,16 @@ class GxqShopList():
             return
         fd = open(self.goods_file, "r")
         for line in fd:
-            line = line.strip().split(" ")
-            self.goods_dict[line[0]] = line[1]
+            line = line.strip()
+            idx = line.rfind(" ")
+            name = line[0:idx]
+            price = line[idx+1:]
+            self.goods_dict[name] = price
 
     def write_file(self, write_string):
         fd = open(self.files, "a+")
         fd.write(write_string)
         fd.close()
-
-
 
     def write_file(self, write_string):
         fd = open(self.files, "a+")
