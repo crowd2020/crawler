@@ -22,9 +22,12 @@ class GxqShopList():
         if self.date != "":
             file_name = self.date
         self.files = file_path + file_name + "滚雪球商城抓取结果"
+        self.goods_file = file_path + "滚雪球商品列表"
         self.marqueen_url = "https://shop.gxq168.com/index/login"
         self.file_column = list()
         self.load_file()
+        self.goods_dict = dict()
+        self.load_goods_file()
 
     def craw_marqueen(self):
         content = xcurl.xcurl(self.marqueen_url).replace("\r", "").replace("\n", "")
@@ -60,8 +63,12 @@ class GxqShopList():
             idx1 = item.find(config.name_str)
             idx2 = item.find("<i>x")
             goods_name = item[idx1 + len(config.name_str):idx2].strip()
-            print user_phone, order_time, goods_name, goods_num
-            line = user_phone + "   " + order_time + "  " + goods_name + "  " + goods_num
+            goods_price = 0
+            if goods_name in self.goods_dict.keys():
+                goods_price = float(self.goods_dict[goods_name])
+            goods_total_price = float(goods_num) * float(goods_price)
+            print user_phone, order_time, goods_name, goods_num, goods_total_price
+            line = user_phone + "   " + order_time + "  " + goods_name + "  " + goods_num + "   " + str(goods_total_price)
             if line in self.file_column:
                 print "column exist"
                 continue
@@ -71,7 +78,7 @@ class GxqShopList():
         if write_string != "":
             header = ""
             if len(self.file_column) == 0:
-                header = "用户 订单时间    商品    个数\n"
+                header = "用户 订单时间    商品    个数 总积分\n"
             write_string = header + write_string
             self.write_file(write_string)
 
@@ -82,6 +89,21 @@ class GxqShopList():
         for line in fd:
             line = line.strip()
             self.file_column.append(line)
+
+    def load_goods_file(self):
+        if os.path.exists(self.goods_file) is False:
+            return
+        fd = open(self.goods_file, "r")
+        for line in fd:
+            line = line.strip().split(" ")
+            self.goods_dict[line[0]] = line[1]
+
+    def write_file(self, write_string):
+        fd = open(self.files, "a+")
+        fd.write(write_string)
+        fd.close()
+
+
 
     def write_file(self, write_string):
         fd = open(self.files, "a+")

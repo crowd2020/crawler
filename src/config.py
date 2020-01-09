@@ -8,3 +8,5 @@ name_str = "<i>已下单</i>"
 
 ul_str = "<ul class=\"pro-items-list clearfix\">\s+(.*?)\s+</ul>"
 li_str = "<li>\s+(.*?)\s+</li>"
+goods_name_str = "<p class=\"pro-name\">(.*?)</p>"
+price_str = "<p class=\"pro-price-s2\">(.*?)</p>"
