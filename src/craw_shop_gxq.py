@@ -57,6 +57,7 @@ class GxqShopList():
                 continue
             order_time = column_list[0]
             if order_time.find(craw_day) == -1:
+                print order_time, craw_day
                 xlog.LOG.ERROR("find order_time error")
                 continue
             goods_num = column_list[2].split(" ")[-1]
