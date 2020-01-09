@@ -5,3 +5,6 @@ marqueen_content_str = "<marquee behavior=\"scoll\"\s+scrollamount=\"14\">\s+(.*
 marqueen_item_str = "<span>\s+(.*?)\s+</span>"
 item_column_str = "<i>(.*?)</i>"
 name_str = "<i>已下单</i>"
+
+ul_str = "<ul class=\"pro-items-list clearfix\">\s+(.*?)\s+</ul>"
+li_str = "<li>\s+(.*?)\s+</li>"
